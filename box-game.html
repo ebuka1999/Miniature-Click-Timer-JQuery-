@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Game</title>
+    <style>
+        #shape{
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            display: none;
+            position: relative;
+            box-shadow: 1px;
+        }
+        img{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <p>Your time taken is: <span style="color: green;" id="text"></span></p>
+    <p><span id="gameover"></span></p>
+    <img id="myImg" src="" width="120px" height="98px">
+    <div id="shape">
+
+    </div>
+    <script>
+        var start = new Date().getTime();
+        var counter = 0;
+        var colors = ["green", "yellow", "brown", "black", "purple", "blue"]
+        function makeShapeAppear(){
+            var top = Math.random() * 400;
+            var left = Math.random() * 400;
+            // var width = Math.random() * 400;
+            var colorIndex = Math.round(Math.random() * 5)
+            document.getElementById('shape').style.top = top + "px"
+            document.getElementById('shape').style.left = left + "px"
+            // document.getElementById('shape').style.width = width + "px"
+            document.getElementById('shape').style.display = 'block'
+            document.getElementById('shape').style.backgroundColor = colors[colorIndex]
+        }
+        function appearAfter(){
+            setTimeout(makeShapeAppear, Math.random() * 1000)
+        }
+        appearAfter()
+        document.getElementById('shape').onclick = function(){
+            document.getElementById('shape').style.display = 'none';
+            var end = new Date().getTime();
+            var kill = ((end - start)/1000);
+            document.getElementById('text').innerHTML = `${kill} seconds`;
+            if (kill < 10) {
+                appearAfter()
+                counter++
+            } else {
+                
+                if (counter > 10) {
+                    document.getElementById("myImg").style.display = 'block'
+                    document.getElementById('gameover').style.color = "green"
+                    document.getElementById('gameover').innerHTML = `GOOD JOB!!! In 10 seconds you clicked on ${counter} boxes`
+                    document.getElementById("myImg").src = "https://c.tenor.com/wWVQDp6Q9hYAAAAM/shaq-shaquille-o-neal.gif"
+                } 
+                else{
+                    document.getElementById("myImg").style.display = 'block'
+                    document.getElementById('gameover').style.color = "red"
+                    document.getElementById('gameover').innerHTML = `OH NO!!! In 10 seconds you only clicked on ${counter} boxes`
+                    document.getElementById("myImg").src = "https://c.tenor.com/ax0wvn_16NwAAAAM/sad-crying.gif"
+
+                }
+            }
+
+        }
+    </script>
+
+</body>
+</html>
